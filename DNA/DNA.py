@@ -16,31 +16,35 @@ Output: Four integers (separated by spaces) counting the respective num-
 ber of times that the symbols 'A', 'C', 'G', and 'T' occur in s.
 """
 
-import os
+from line_profiler import profile
 
-from utils.files import extrair_conteudo_arquivo
+from utils.profiling import setup_profiler
 
-SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
-DATA_DIR = os.path.join(SCRIPT_DIR, "data")
+setup_profiler(__file__)
 
-caminho_arquivo = ""
-if os.path.exists(DATA_DIR) and os.listdir(DATA_DIR):
-    arquivo = os.listdir(DATA_DIR)[0]
-    caminho_arquivo = os.path.join(os.path.abspath(DATA_DIR), arquivo)
-else:
-    print("Pasta sem arquivo ou extensão não é .txt")
+from utils.files import extrair_conteudo_arquivo, encontrar_arquivo
 
-nucleotides: dict[str, int] = {}
-if caminho_arquivo:
-    dna = extrair_conteudo_arquivo(caminho_arquivo)
-    for nucleotide in dna:
-        if nucleotide in nucleotides:
+
+@profile
+def count_DNA():
+    caminho_arquivo = encontrar_arquivo(__file__)
+
+    nucleotides: dict[str, int] = {
+        "A": 0,
+        "C": 0,
+        "G": 0,
+        "T": 0,
+    }
+    if caminho_arquivo:
+        dna = extrair_conteudo_arquivo(caminho_arquivo)
+        for nucleotide in dna:
             nucleotides[nucleotide] += 1
-        else:
-            nucleotides[nucleotide] = 1
-else:
-    print("Caminho não existe!")
 
-resultado = nucleotides.values()
+        resultado = nucleotides.values()
+        print(*resultado)
+    else:
+        print("Caminho não existe!")
 
-print(*resultado)
+
+if __name__ == "__main__":
+    count_DNA()

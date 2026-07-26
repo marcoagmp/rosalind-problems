@@ -22,24 +22,28 @@ to deal with sequence of nucleotides.
 import os
 
 from Bio.Seq import Seq
+from line_profiler import profile
+from utils.profiling import setup_profiler
+from utils.files import extrair_conteudo_arquivo, encontrar_arquivo
 
-from utils.files import extrair_conteudo_arquivo
+setup_profiler(__file__)
 
-SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
-DATA_DIR = os.path.join(SCRIPT_DIR, "data")
 
-caminho_arquivo = ""
-if os.path.exists(DATA_DIR) and os.listdir(DATA_DIR):
-    arquivo = os.listdir(DATA_DIR)[0]
-    caminho_arquivo = os.path.join(os.path.abspath(DATA_DIR), arquivo)
-else:
-    print("Pasta sem arquivo ou extensão não é .txt")
+@profile
+def bio_count_DNA():
+    caminho_arquivo = encontrar_arquivo(os.path.abspath(__file__))
 
-sequencia = Seq(extrair_conteudo_arquivo(caminho_arquivo))
+    if caminho_arquivo:
+        sequencia = Seq(extrair_conteudo_arquivo(caminho_arquivo))
+        print(
+            sequencia.count("A"),
+            sequencia.count("C"),
+            sequencia.count("G"),
+            sequencia.count("T"),
+        )
+    else:
+        print("Caminho não existe!")
 
-print(
-    sequencia.count("A"),
-    sequencia.count("C"),
-    sequencia.count("G"),
-    sequencia.count("T"),
-)
+
+if __name__ == "__main__":
+    bio_count_DNA()
