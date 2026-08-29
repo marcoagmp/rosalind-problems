@@ -15,7 +15,7 @@ tipo FASTA, .pdf, etc...
 import os
 
 
-def extrair_multiplas_sequencias_arquivo(filepath: str) -> list[str]:
+def extrair_multiplas_linhas_arquivo(filepath: str) -> list[str]:
     with open(filepath) as f:
         content = [line.strip() for line in f.readlines()]
 

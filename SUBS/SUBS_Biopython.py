@@ -36,12 +36,12 @@ Sample Output
 
 from Bio.Seq import Seq
 from Bio import SeqUtils
-from utils.files import encontrar_arquivo, extrair_multiplas_sequencias_arquivo
+from utils.files import encontrar_arquivo, extrair_multiplas_linhas_arquivo
 
 
 def Biopython_encontrar_motivo():
     arquivo = encontrar_arquivo(__file__)
-    conteudo = extrair_multiplas_sequencias_arquivo(arquivo)
+    conteudo = extrair_multiplas_linhas_arquivo(arquivo)
 
     dna = Seq(conteudo[0])
     motivo = Seq(conteudo[1])

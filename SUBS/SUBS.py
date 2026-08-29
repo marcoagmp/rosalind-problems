@@ -34,12 +34,12 @@ Sample Output
 2 4 10
 """
 
-from utils.files import encontrar_arquivo, extrair_multiplas_sequencias_arquivo
+from utils.files import encontrar_arquivo, extrair_multiplas_linhas_arquivo
 
 
 def encontrar_motivo():
     arquivo = encontrar_arquivo(__file__)
-    conteudo = extrair_multiplas_sequencias_arquivo(arquivo)
+    conteudo = extrair_multiplas_linhas_arquivo(arquivo)
 
     dna = conteudo[0]
     motivo = conteudo[1]
