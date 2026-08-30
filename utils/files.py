@@ -15,6 +15,22 @@ tipo FASTA, .pdf, etc...
 import os
 
 
+def extrair_fasta(filepath: str):
+    id = None
+    sequencias = {}
+    with open(filepath) as f:
+        for line in f:
+            if line.startswith(">"):
+                id = line.split(">")[1].strip()
+                sequencias[id] = ""
+            else:
+                if id is not None:
+                    sequencias[id] += line.strip()
+
+    return sequencias
+
+
+
 def extrair_multiplas_linhas_arquivo(filepath: str) -> list[str]:
     with open(filepath) as f:
         content = [line.strip() for line in f.readlines()]
